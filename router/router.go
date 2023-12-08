@@ -1,0 +1,16 @@
+package router
+
+import (
+	"go-rest-api/controller"
+
+	"github.com/labstack/echo/v4"
+)
+
+// ルーティングを設定する
+func NewRouter(uc controller.IUserController) *echo.Echo {
+	e:=echo.New()
+	e.POST("/signup", uc.SignUp)
+	e.POST("/login", uc.Login)
+	e.POST("/logout", uc.LogOut)
+	return e
+}
