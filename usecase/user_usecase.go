@@ -15,10 +15,14 @@ type IUserUseCase interface {
 	Login(user model.User) (string, error)
 }
 
+// 構造体を作成
 type UserUseCase struct {
 	ur repository.IUserRepository
 }
 
+// コンストラクタを作成
+// 依存関係の注入を行う(di)
+// 構造体の実体を作成する
 func NewUserUseCase(ur repository.IUserRepository) IUserUseCase {
 	return &UserUseCase{ur}
 }
