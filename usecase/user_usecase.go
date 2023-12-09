@@ -16,7 +16,7 @@ type IUserUseCase interface {
 }
 
 // 構造体を作成
-type UserUseCase struct {
+type userUseCase struct {
 	ur repository.IUserRepository
 }
 
@@ -24,11 +24,11 @@ type UserUseCase struct {
 // 依存関係の注入を行う(di)
 // 構造体の実体を作成する
 func NewUserUseCase(ur repository.IUserRepository) IUserUseCase {
-	return &UserUseCase{ur}
+	return &userUseCase{ur}
 }
 
 // ユーザーを新規登録する
-func (uu *UserUseCase) SignUp(user model.User) (model.UserResponse, error) {
+func (uu *userUseCase) SignUp(user model.User) (model.UserResponse, error) {
 	// パスワードをハッシュ化する
 	hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
 	if err != nil {
@@ -48,7 +48,7 @@ func (uu *UserUseCase) SignUp(user model.User) (model.UserResponse, error) {
 }
 
 // ユーザーをログインさせる
-func (uu *UserUseCase) Login(user model.User) (string, error) {
+func (uu *userUseCase) Login(user model.User) (string, error) {
 	// ユーザーを取得する
 	storedUser := model.User{}
 	if err := uu.ur.GetUserByEmail(&storedUser, user.Email); err != nil {

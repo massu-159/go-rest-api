@@ -17,7 +17,7 @@ type IUserController interface {
 }
 
 // 構造体を作成
-type UserController struct {
+type userController struct {
 	uu usecase.IUserUseCase
 }
 
@@ -25,11 +25,11 @@ type UserController struct {
 // 依存関係の注入を行う(di)
 // 構造体の実体を作成する
 func NewUserController(uu usecase.IUserUseCase) IUserController {
-	return &UserController{uu}
+	return &userController{uu}
 }
 
 // ユーザーを新規登録する
-func (uc *UserController) SignUp(c echo.Context) error {
+func (uc *userController) SignUp(c echo.Context) error {
 	// リクエストボディを取得する
 	user := model.User{}
 	if err := c.Bind(&user); err != nil {
@@ -44,7 +44,7 @@ func (uc *UserController) SignUp(c echo.Context) error {
 }
 
 // ユーザーをログインさせる
-func (uc *UserController) Login(c echo.Context) error {
+func (uc *userController) Login(c echo.Context) error {
 	// リクエストボディを取得する
 	user := model.User{}
 	if err := c.Bind(&user); err != nil {
@@ -70,7 +70,7 @@ func (uc *UserController) Login(c echo.Context) error {
 }
 
 // ユーザーをログアウトさせる
-func (uc *UserController) LogOut(c echo.Context) error {
+func (uc *userController) LogOut(c echo.Context) error {
 	// cookieを削除する
 	cookie := new(http.Cookie)
 	cookie.Name = "token"

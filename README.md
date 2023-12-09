@@ -21,4 +21,6 @@ psql
 ## カラム情報を取得する
 \d [テーブル名]
 
+## サーバーの起動
+GO_ENV=dev go run main.go
 ```
