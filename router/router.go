@@ -31,14 +31,14 @@ func NewRouter(uc controller.IUserController, tc controller.ITaskController) *ec
 		CookiePath:     "/",
 		CookieDomain:   os.Getenv("API_DOMAIN"),
 		CookieHTTPOnly: true,
-		CookieSameSite: http.SameSiteNoneMode,
-		// CookieSameSite: http.SameSiteDefaultMode, // ローカル環境でテストする場合はこちらを使用する
+		// CookieSameSite: http.SameSiteNoneMode,
+		CookieSameSite: http.SameSiteDefaultMode, // ローカル環境でテストする場合はこちらを使用する
 		// CookieMaxAge:   60,
 	}))
 	e.POST("/signup", uc.SignUp)
 	e.POST("/login", uc.Login)
 	e.POST("/logout", uc.LogOut)
-	e.GET("/csrf", uc.CSRFToken)
+	e.GET("/csrf", uc.CsrfToken)
 	t := e.Group("/tasks")
 	// JWTを使用するミドルウェアを設定する
 	t.Use(echojwt.WithConfig(echojwt.Config{

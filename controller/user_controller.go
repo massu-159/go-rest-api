@@ -14,7 +14,7 @@ type IUserController interface {
 	SignUp(c echo.Context) error
 	Login(c echo.Context) error
 	LogOut(c echo.Context) error
-	CSRFToken(c echo.Context) error
+	CsrfToken(c echo.Context) error
 }
 
 // 構造体を作成
@@ -63,9 +63,10 @@ func (uc *userController) Login(c echo.Context) error {
 	cookie.Expires = time.Now().Add(24 * time.Hour) // 有効期限は24時間
 	cookie.Path = "/"
 	cookie.Domain = os.Getenv("API_DOMAIN")
-	cookie.Secure = true // httpsで通信する場合はtrueに変える。ローカル環境でテストする場合はfalseに変える
+	cookie.Secure = false // httpsで通信する場合はtrueに変える。ローカル環境でテストする場合はfalseに変える
 	cookie.HttpOnly = true
-	cookie.SameSite = http.SameSiteNoneMode
+	// cookie.SameSite = http.SameSiteNoneMode
+	cookie.SameSite = http.SameSiteDefaultMode // ローカル環境でテストする場合はこちらを使用する
 	c.SetCookie(cookie)
 	return c.NoContent(http.StatusOK)
 }
@@ -79,15 +80,16 @@ func (uc *userController) LogOut(c echo.Context) error {
 	cookie.Expires = time.Now()
 	cookie.Path = "/"
 	cookie.Domain = os.Getenv("API_DOMAIN")
-	cookie.Secure = true // httpsで通信する場合はtrueに変える。ローカル環境でテストする場合はfalseに変える
+	cookie.Secure = false // httpsで通信する場合はtrueに変える。ローカル環境でテストする場合はfalseに変える
 	cookie.HttpOnly = true
-	cookie.SameSite = http.SameSiteNoneMode
+	// cookie.SameSite = http.SameSiteNoneMode
+	cookie.SameSite = http.SameSiteDefaultMode // ローカル環境でテストする場合はこちらを使用する
 	c.SetCookie(cookie)
 	return c.NoContent(http.StatusOK)
 }
 
 // CSRFトークンを取得する
-func (uc *userController) CSRFToken(c echo.Context) error {
+func (uc *userController) CsrfToken(c echo.Context) error {
 	token := c.Get("csrf").(string)
 	return c.JSON(http.StatusOK, echo.Map{
 		"csrfToken": token,
