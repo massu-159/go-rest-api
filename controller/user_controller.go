@@ -14,6 +14,7 @@ type IUserController interface {
 	SignUp(c echo.Context) error
 	Login(c echo.Context) error
 	LogOut(c echo.Context) error
+	CSRFToken(c echo.Context) error
 }
 
 // 構造体を作成
@@ -83,4 +84,12 @@ func (uc *userController) LogOut(c echo.Context) error {
 	cookie.SameSite = http.SameSiteNoneMode
 	c.SetCookie(cookie)
 	return c.NoContent(http.StatusOK)
+}
+
+// CSRFトークンを取得する
+func (uc *userController) CSRFToken(c echo.Context) error {
+	token := c.Get("csrf").(string)
+	return c.JSON(http.StatusOK, echo.Map{
+		"csrfToken": token,
+	})
 }
