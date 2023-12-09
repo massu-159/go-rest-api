@@ -3,9 +3,9 @@ module go-rest-api
 go 1.20
 
 require (
-	github.com/golang-jwt/jwt/v5 v5.2.0
+	github.com/golang-jwt/jwt/v4 v4.4.3
 	github.com/joho/godotenv v1.5.1
-	github.com/labstack/echo-jwt/v4 v4.2.0
+	github.com/labstack/echo-jwt/v4 v4.1.0
 	github.com/labstack/echo/v4 v4.11.3
 	golang.org/x/crypto v0.14.0
 	gorm.io/driver/postgres v1.5.4

@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/golang-jwt/jwt/v5"
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/labstack/echo/v4"
 )
 
@@ -35,7 +35,7 @@ func (tc *taskController) GetAllTasks(c echo.Context) error {
 	// ユーザーIDを取得する
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
-	userId := claims["userId"]
+	userId := claims["user_id"]
 
 	// タスクを取得する
 	tasksRes, err := tc.tu.GetAllTasks(uint(userId.(float64)))
@@ -50,7 +50,7 @@ func (tc *taskController) GetTaskByID(c echo.Context) error {
 	// ユーザーIDを取得する
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
-	userId := claims["userId"]
+	userId := claims["user_id"]
 
 	// タスクIDを取得する
 	id := c.Param("taskId")
@@ -75,7 +75,7 @@ func (tc *taskController) CreateTask(c echo.Context) error {
 	// ユーザーIDを取得する
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
-	userId := claims["userId"]
+	userId := claims["user_id"]
 
 	task.UserId = uint(userId.(float64))
 	// タスクを作成する
@@ -97,7 +97,7 @@ func (tc *taskController) UpdateTask(c echo.Context) error {
 	// ユーザーIDを取得する
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
-	userId := claims["userId"]
+	userId := claims["user_id"]
 
 	// タスクIDを取得する
 	id := c.Param("taskId")
@@ -116,7 +116,7 @@ func (tc *taskController) DeleteTask(c echo.Context) error {
 	// ユーザーIDを取得する
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
-	userId := claims["userId"]
+	userId := claims["user_id"]
 
 	// タスクIDを取得する
 	id := c.Param("taskId")
